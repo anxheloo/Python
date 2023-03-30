@@ -1,0 +1,562 @@
+#Installing Django 
+
+1-Download Python latest version and add it to the Path(Envirenmental Variables) | To check if u have it installed -> write in cmd , python --version 
+2-Close cmd or powershell and open again | pip install django , in cmd
+3-Create a Folder for your project -> Open the Folder Location -> Write in CMD: django-admin startproject myproject
+4-Open the Folder/myproject -> python manage.py runserver -> open the Server Link on Browser
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Create a Django Project.  With Virtual Envirenment For Django Project
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1-We also create a virtual envirement inside the 'Folder Project' of the Django we are gonna work, in order to keep everything seperated.
+
+	-Go to 'Folder Location' on cmd
+	-Python -m venv my_env   
+	-From 'Folder Location' -> my_env\Scripts\activate
+	-To Deactivate virtual envirenment go to 'Folder Location' on cmd: deactivate
+
+
+2-Now after we create the virtual envirenment we go to the folder directory we created -> 
+	-pip install django  | For RestApi we also use >> pip install djangorestframework
+	-Go on 'Folder Location' on cmd -> django-admin startproject helloworld . -> we use the '.' , if we dont use it,
+	it is going to create a new folder inside the Folder we are working. So to keep it simple.
+
+3-To create the app, inside project directory we just created ->django-admin startapp book
+
+4-Open the 'Folder Location' -> python manage.py runserver -> open the Server Link on Browser
+
+
+
+
+#From PyCharm Terminal: 
+-----------------------
+1-Create a new project using Virtualenv
+2-Install Django >> pip install django . If we want to intall e specific version >>  pip install django==2.2
+3-Create a Django project >> django-admin startproject djangoProject
+4-Manage Directories in project location files 
+5-Run server>> python manage.py runserver 
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+#1-Creating a sample Ecommerce App in Django | CodeDonor Videos
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+	1-Create a new Folder
+	2-Navigate to the Folder location from CMD
+	3-django-admin startproject 'mysite'    -> mysite is the project name, we can use whatever we want
+	4-Open PyCharm and Open the Folder we just Created
+	5-From CMD : Navigate to mysite project Folder inside newsite Folder >> python manage.py runserver -> to run the server
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+#2-Create Our Own App | Code Donor -> Individual Entity in that Website that performs some particular thing
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	1-Lets Suppoze we are developing a Website that is going to display a list of books:
+		-Navigate to mysite project folder inside newsite Folder >> django-admin startapp books
+	2-Now in PyCharm we Can see that another folder named 'books' is added  
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+#3-Display Something To The User | In our views.py file : 
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	#1-We need to display something to the User. In order to Respond to the Request
+	from django.http import HttpResponse
+	
+	#2-We create a method that returns the HttpResponse
+	def index(request):
+    		#This Response is going to contain our HTML code
+    		return HttpResponse("<h>This is our book Homepage<h>")
+	
+	#3-We copy the urls.py from mysite -> books. We go there and : 
+					from django.contrib import admin
+					from django.urls import path
+					from . import views
+
+					urlpatterns = [
+    						path(r'^$',views.index, name='index'),   ->Whenever python redirects to this, we tell it to execute this function : books/urls.py
+					]
+	
+	#4-Finally we move to mysite/urls.py file and we created an url pattern for 'books'; whenever the user types websitename/books, he is going to be redirected to the index function
+			
+		urlpatterns = [
+    			path('admin/', admin.site.urls),
+    			path('books/', include('books.urls')),   
+		]
+
+	
+	#5-Python comes with a default Database that we can check at settings file: It uses 'sqlite' database. Now we go to terminal or CMD >> python manage.py migrate
+													       Migrations are updates on Database when we create or change smthng
+	#6-Now when we run the server it will no longer gives use error.
+
+	
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+#4-Database | Create Our Structure of Database
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	1-We go at models.py
+	2-We create our database model with attributes. We create the class book like below, inside models.py
+
+
+		class book(models.Model):
+    			name = models.CharField(max_length=100)
+    			author = models.CharField(max_length=100)
+    			price = models.CharField(max_length=100)
+    			type = models.CharField(max_length=100)
+
+
+	 #If we want to create another table is simple: Just create another class here at models.py like above
+
+	
+	3-We need to Check if our book app is installed. settings.py -> 'Installed apps' and add this -> 'books.apps.BooksConfig'.      books-> is the name of the app 
+																	.apps-> because is present at apps.py file
+																	BooksConfig-> name of the class at apps.py file 
+
+
+
+	4-We define the migrations so our table is ready -> Go to terminal -> python manage.py makemigrations books
+							 		   -> python manage.py slqmigrate books 0001
+							 		   -> python manage.py migrate
+
+		#Whenever we want to change the structure of our database(the structure is the class we created at models.py), we need to perform this 3 operations
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+#5-Adding data to the Database Table in Django 
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	1-Write in terminal or cmd >> python manage.py shell -> this opens up a python interactive concole
+	2-We need to import that table in order to use it >>    from books.models import book
+	3-book.objects.all() -> list out each and every object in book table
+
+	4- 
+
+				>>> a = book()              -> we create an object of our table 'book'
+				>>> a.name = "Life"	    -> we save data to the object we created
+				>>> a.author="abc"	    -> we save data to the object we created.
+				>>> a.price = "10"	    -> we save data to the object we created.
+				>>> a.type = "Business"	    -> we save data to the object we created.	
+				>>> a.save()		    -> we save data we created 
+				>>> a.name		    -> to access the attribute we created
+				'Life'
+				>>> a.author		    -> to access the attribute we created
+				'abc'
+
+		#We can also create object 'b' to store datas for another book
+	
+			 b = book()
+			 b.name="Success"
+			 b.author ="yzv"
+			 b.price = "30"
+			 b.type = "fiction"
+			 b.save()
+
+		
+		#Each book object(database) is stored in a particular id
+			>> a.id or a.pk(primary key) ->terminal will print '1'
+			>> b.id or a.pk ->terminal will print '2'
+
+
+
+		#If we type in terminal: book.objects.all() -> we get  <QuerySet [<book: book object (1)>, <book: book object (2)>]>
+		In order to get book name we go to 'models.py' and create:       
+										 def __str__(self):
+        									       return self.name + '-' + self.author 
+
+							->>>save all at pycharm after change
+							->>>exit()   		  	   -> exit shell 
+							->>>python manage.py shell   	   -> open shell again
+							->>>from books.models import book  -> import table in order to use it 
+							->>>book.objects.all()             -> list all book tables in the new order -> <QuerySet [<book: Life-abc>, <book: Life-yzv>]>				
+							->>> book.objects.filter(id=1)     -> get the book object by id
+
+
+	
+			
+#If we want to add another field in our existing DB:
+-----------------------------------------------------
+	-We add the field in our DB class, in this case at book class in models.py
+	-python manage.py makemigrations books 	
+	-select option 1
+	-Enter the default value as valid Python -> we enter a blank field: ''
+	-python manage.py migrate
+	-open admin panel and copy the link of the image in the image field
+	-Display the image in your website if u want
+
+
+#To add Data to Our DB we have 2 ways: 
+--------------------------------------
+	1) Go to Terminal and add them manually 
+	2) Go to Admin panel and add there
+
+
+#BUT NOW WE WANT TO ADD DATA TO DB IN OUR WEBSITE BY USING ADD BOOK BUTTON:
+--------------------------------------------------------------------------- 
+
+	-Go to models.py and import : from django.urls import reverse
+	-Add this function ->     def get_absolute_url(self):
+        				return reverse('books:detail',kwargs={'pk:self.pk'})
+
+	-Create class in views.py : 
+					class BookCreate(CreateView):
+    						model = book
+    						fields = ['name','author','price','type','book_image']
+
+	
+	-Add the path url and link it with the html page : re_path(r'books/add/$', views.BookCreate.as_view(), name='book_add'),
+
+	-Create the HTML page in templates
+
+
+-------------------------- ---------------------------------------------------------------------------------------------------------------------------------
+#6-Admin Panel in Django -> A functionality to manage website from a single page
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	-To access the admin panel : http://127.0.0.1:8000/admin/ 
+	-But we dont know the credentials of admin, thats why we need to create it: 
+	-In Terminal or CMD ->> python manage.py createsuperuser
+	-To make the book table show on admin panel: 1-Go to admin.py & add this line of code -> admin.site.register(book) 
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+#7-Creating Another View in Django
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+A view is a web page, so in order to access it we need to type a certain URL. We have to decide what kind of URL is going to redirect the user to that particular view.
+
+	1-We go to books/urls - >         
+					urlpatterns = [
+   						re_path(r'^$', views.index, name='index'),
+
+   						#/books/2/
+   						re_path(r'^(?P<book_id>[0-9]+)/$', views.detail, name='detail'),   ->We create the group that starts with a group_id number 
+					]
+
+
+	2-We go to views.py and create a method named detail that is going to Respond with HTML code: 
+
+					def detail(request,book_id):
+    						return HttpResponse("<h2>Details for Book ID:" + str(book_id) + "</h2>")
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+#8-Display the set of Books from DB in our webpage
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	1-We went on to the views.py and extracted all objects and saved them in a variable called all_books = Book.objects.all()
+	2-Than we iterate in the book list and exctracted book name and make a custom url for each book
+
+
+	
+	def index(request):
+
+    		#We save datas from our database in a variable
+    		all_books = book.objects.all()
+
+    		html = ''
+    		#We need to separate that list of books into multiple things | WE use a for loop
+    		#Also we define a url variable if we click on a particular book to display the url as /books/book.id(id number)/
+
+    		for books in all_books:
+        	url = '/books/' + str(books.id) + '/'
+        	html+= '<a href="'+ url +'">' + str(books.name) + '</a><br>'
+
+    		return HttpResponse(html)
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+#9-Templates Helps us build Backend and Frontend seperately and later on connect them together to form an entire website
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	1-We need to create a new template in books directory ->create new directory(templates) -> inside templates create a new directory(books) | same name as root folder -> inside that 	books folder create index.html file
+
+	2-	-We go to books/views :      from django.template import loader          #-> we import loader which is going to load our template
+		-def index(request):
+
+    		#We save datas from our database in a variable
+    		all_books = book.objects.all()
+    		template = loader.get_template('books/index.html')
+    		context = {
+        		'all_books':all_books
+    		}
+
+    		return HttpResponse(template.render(context,request))
+	
+
+	3-Than we build the index.html file to display our books in a list
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+#10-Using Rendering for templates
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+We need to import:
+from django.shortcuts import render
+
+
+def index(request):
+
+    #We save datas from our database in a variable
+    all_books = book.objects.all()
+
+    #template = loader.get_template('books/index.html')
+    context = {
+        'all_books':all_books
+    }
+
+    #return HttpResponse(template.render(context,request))
+    return render(request,'books/index.html',context)
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+#11-Raising a 404 Error in Django - We need to throw an exception if we check for a book id that does not exist
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	1-At books/views :   from django.http import Http404
+	2-Create another html file: detail.html 
+
+	3-Modify the detail method at books/views 
+
+		def detail(request,book_id):
+    		try:
+        	#we get here the book object by id
+        	get_book_by_id = book.objects.get(id=book_id)
+
+        	#we pass here the book class
+    		except book.DoesNotExist:
+        	raise Http404('THis book does not exist')
+
+	    	return render(request, 'books/detail.html', {'get_book_by_id':get_book_by_id})
+
+	4-Add at detail.html : 	<h1>{{get_book_by_id.name}}</h1>
+				<h4>{{get_book_by_id.author}}</h4>
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#12-NAMESPACES
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	Lets suppoze we are working on e team that handles multiple apps. In every app we may have an index.html page and an detail.html page.
+	Thats why we define the app_name in photop/urls.py (back end urls). 
+
+	Like this example : <a href="{% url 'photoapp:detail' photoById.id %}">{{x.name}}</a> 
+		-photoapp is app_name
+		
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+#13-Make our Website Looks More Beautiful
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	1-We create a directory in books app(mysite/books) to store static files
+	2-Inside static directory we create a 'books' directory to store css style files & an images directory to store images
+	3-Lets say we want to use an image as our background image in our website; we get the image an copy it inside 'mysite/books/static/books/images' (images directory inside static 	directory)
+	4-Set the background image inside style.css ->  body { background: white url("images/back.jpg"); }
+
+		#Whenever we use static files in our HTML code we need to include static files in our HTML code as well by adding this to the top of the page -> {% load static %}
+	5-We also need to have a link of this style sheet in HTML file: We add in the <head> section of our HTML structure the link to our css file : 
+		        
+			<head>
+                		<link rel="stylesheet" type="text/css" href="{% static 'books/style.css' %}">
+                		<!-- <link rel="stylesheet" href="{% static 'books/style.css' %}">-->
+        		</head>
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+#14-Designing Navigation Bar | Using Bootstrap
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	1-Go to Bootstrap on google and Copy the link at 'Include via CDN' & add it at HTML head section.
+	2-Use one of bootstrap navbar examples 
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+#15-REST API | We are going to Create a simple toDo app
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	1-For setup and installation of project follow the steps above
+	
+	2-We go to models and create a new model called Task in order to store different tasks:
+
+			class Task(models.Model):
+    				task_name = models.CharField(max_length==200)
+    				task_desc = models.CharField(max_length == 200)
+    				date_created = models.DateTimeField(auto_now == True) #We get the current time instead of entering manually
+
+	
+	3-We now have to develop a rest api(every restapi needs to have a file called serializer | this take the model and convert to JSON format, so it will be presented to users)
+
+	4-From the app folder create a new python file called "serializers.py"
+
+
+			from .models import Task
+			from rest_framework import serializers
+
+			#We create class Serializer for Task (to convert the Task DATAS to JSON format)
+			class TaskSerializer(serializers.ModelSerializer):
+
+    				#we need to provide the infos from model class, name of model and fields we want to display in JSON format
+    				class Meta:
+        				model = Task
+        				fields = ('id','task_name','task_desc')
+
+	5-We need to create a view for this serializer so we displat api contents to the user: 
+	
+
+		from django.shortcuts import render
+		from rest_framework import viewsets
+		from .serializers import TaskSerializer
+		from .models import Task
+
+		# Create your views here.
+
+		class TaskViewSet(viewsets.ModelViewSet):
+
+    			queryset = Task.objects.all().order_by("date_created")
+    			serializer_class = TaskSerializer
+
+
+	6-Now we need to go ahead and set the urls for accessing the api : we go to urls.py file from the project folder
+
+	from django.contrib import admin
+	from django.urls import path
+	from django.conf.urls import include,url
+	from rest_framework import routers
+	from rest.restapp.views import TaskViewSet
+
+
+	router = routers.DefaultRouter()
+	router.register(r'task',TaskViewSet)
+
+	urlpatterns = [
+    		path('',include(router.urls)),
+    		path('admin/', admin.site.urls),
+	]
+
+
+	
+	7-We have to go to settings.py at installed apps and we need to include django rest framework : 
+	
+	INSTALLED_APPS = [
+    	'rest_framework',
+    	'restapp.apps.RestappConfig',    -> above is the explanation of this at lession #4
+    	'django.contrib.admin',
+   	'django.contrib.auth',
+    	'django.contrib.contenttypes',
+    	'django.contrib.sessions',
+    	'django.contrib.messages',
+    	'django.contrib.staticfiles',
+	]
+
+
+
+	8-Now at admin.py we have to make sure to register the models
+
+	admin.site.register(Task)
+
+
+	9-Make migrations -> details at lession #4
+	10-Runserver
+
+ 	11-Now we add another filed at the model called 'completed' with a default value of False and also add it to serializer 
+	12-Than we have to 'python manage.py makemigrations' and 'python manage.py migrate' to display the changes
+	13-we add these 2 at taskapp/views.py : 
+			
+		class DueTaskViewSet(viewsets.ModelViewSet):
+
+    		#List out those tasks that are not completed
+    		queryset = Task.objects.all().order_by("-date_created").filter(completed = False)
+    		serializer_class = TaskSerializer
+    
+    		# List out those tasks that are completed
+		class CompletedTaskViewSet(viewsets.ModelViewSet):
+    		queryset = Task.objects.all().order_by("-date_created").filter(completed = True)
+    		serializer_class = TaskSerializer
+
+
+	14-Than we go to rest/urls.py:
+		
+		#router = routers.DefaultRouter()
+		router = routers.SimpleRouter()
+		router.register(r'task',TaskViewSet)
+		router.register(r'completed_task',views.CompletedTaskViewSet)
+		router.register(r'due_task',views.DueTaskViewSet)
+
+		urlpatterns = [
+    		path('',include(router.urls)),
+    		path('admin/', admin.site.urls),
+		]
+
+
+
+	15-When we work with images we need to install pillow module -> pip install pillow
+
+	16-Now we go to modules.py file and we have to add an image field  -> image = models.ImageField(upload_to='Images/',default='Images/None/No0img.jpg')
+	17-Make migrations
+	18-On top of class Meta at serializers we add ->  image = serializers.ImageField(max_length = 1000, use_url=True)
+	19-Inside the project folder we create another folder for 'media' 
+	
+	20-We go to settings.py in the end at static :   ->    
+		MEDIA_ROOT = BASE_DIR / 'media'
+		MEDIA_URL = '/media/'
+	
+	21-pip install django-filter -> to use filters | Watch the Lessions
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,1133 @@
+1.Download python.org/downloads
+2.download pycharm from jetbrains 
+
+
+
+
+from math import *
+
+print("   /|")
+print("  / |")
+print(" /  |")
+print("/___|")
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+# We can store different type of strings here and also numbers,decimal numbers,  using character_"nameOfVariableWeWant"
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+character_name="john"
+character_age="15"
+character_age2=15
+
+a = "xhon"
+del a , #to delete the variable
+
+print(character_name)
+print(character_age)
+print(character_age2)
+
+
+si = 100
+print("The value for simple interest is: " + str(si))  #we cannot concatinate 2 different variables, thats why we convert the number 'si' in string using str(si)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#working with booleans
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+isMale=False
+print(isMale)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Working with string
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+print("Giraffe\nAcademy")  #it will print in new lines
+print("hello "+"world")  #concatinate 2 strings
+
+#we store the string hello inside phrase
+phrase = "hello"
+
+#Functions
+print(phrase.upper()) 
+print(phrase[0]) #this way we access the letter at index 0
+print(phrase.index("e")) #this print 1, because the letter "e" is located at index 1 inside hello
+
+phrase = "hello"
+print(phrase.startswith("h"))
+print(phrase.endswith("o"))
+
+
+#Replace hello with hello world
+print(phrase.replace("hello", "hello world"))
+print("Hello There".replace("There","world"))
+
+
+print("He\'s a good guy") , # \' or \"  is used to make the sign (') or (")
+
+#String Formatting - This is useful when we want to display some date
+---------------------------------------------------------------------
+numbers = [4,5,6]
+newString = "Date:{0}/{1}/{2}".format(numbers[0], numbers[1], numbers[2])
+print(newString)
+
+a = "{x}/{y}".format(x=100,y=200)
+print(a)
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Working with numbers
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+print(-2.09213)
+print(3+2.5) #we can do all kind of operations
+print(10%3) #modulas operator, it devides 10 by 3 and prints the reminder
+
+#increment age by 1
+age = 39
+age+=1 ,
+age = age + 1,  #increment by 1
+
+mynum=5
+my_num=6
+print(mynum)
+print(my_num)
+
+#Convert number into string. Everytime we want to print a number next to a string we use str, cuz python doesnt allow us to concatinate a number and a string
+print(str(mynum))
+                
+
+#print 3 in power of 3
+print(pow(3,3))
+
+#2 in power of 3
+print(2**3) 
+
+#find the square root of 49
+49**(1/2)
+
+#find the division without reminders
+7 // 3 
+
+#It prints the maximum number in this case is 6
+print(max(4,6))
+
+#It will round this number up to 4
+print(round(3.7))
+
+#There are a bunch of other functions for math: we have to import it to use:   from math import *
+
+p = input('Enter value for p: ') #we get an input in a form of string
+
+p = int(p)    	#we convert that input into an integer
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Getting input from Users
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+name = input("Enter your name: ")  #we save the input in a variable named "name", so we can print it after
+age = input("Enter your age:")
+print("Hello " + name + ", "+"you are " + age + " years old")
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Build a basic calculator
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+num1 = input("Enter a number: ")
+num2 = input("Enter another number: ")
+result = num1 + num2
+
+print(result)  #The problem with this simple calculator is that python takes the input as strings
+
+#So we need to convert the string to numbers
+
+num1 = input("Enter a number: ")
+num2 = input("Enter another number: ")
+result = int(num1) + int(num2) #this will convert to integer numbers
+
+print(result)
+
+# The problem with this, is that we cant add decimal numbers, so in order to give as input any number we use float as below:
+
+num1 = input("Enter a number: ")
+num2 = input("Enter another number: ")
+result = float(num1) + float(num2)
+
+print(result)
+
+
+
+#Mad libs game
+
+color = input("Enter a color: ")
+plural_noun = input("Enter a plural noun: ")
+celebrity = input("Enter a celebrity: ")
+
+print("Roses are "+ color)
+print(plural_noun + " are blue")
+print("I love " + celebrity)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Working with lists
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+friends = ["Kevin","Karen","Jim","Beqo","Liri Ketit"]
+print(friends)
+
+print(friends[2])  #printing by index
+
+print(friends[-1]) #by using negative index we access the list from the back of the list
+
+friends[1] = "Mike" #change an element inside a list
+print(friends)
+
+#List slicing
+-------------
+print(friends[1:])   #this prints elements from index 1 to the end
+print(friends[0:3])  #access elements from index 0-3(excluding 3)
+print(friends[0:6:2])#it is going to skip values by 2: It will print: Kevin, Jim, Liri Ketit
+
+#Creating List with  Rules
+--------------------------
+list = [x**2 for x in range(10)]                        ->  This will print:  [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+list = [x**2 for x in range(10) if x**2 % 2 == 0]       ->  This will print even numbers:  [0, 4, 16, 36, 64]
+
+
+#String Formatting 
+-------------------
+
+#This is useful when we want to display some date
+numbers = [4,5,6]
+newString = "Date:{0}/{1}/{2}".format(numbers[0], numbers[1], numbers[2])
+print(newString)
+
+a = "{x}/{y}".format(x=100,y=200)
+print(a)
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#List functions
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+lucky_numbers = [4,8,15,16,23,42]
+friends = ["Kevin","Karen","Jim","Jim","Beqo","Liri Ketit"]
+
+friends.extend(lucky_numbers) #extend the list by adding the lucky_numbers list
+friends.append("Creed")  #append(shtoj) an item in the list
+friends.insert(1, "Kelly")     #add an item in the middle of the list, at index 1. All other elemetns will be pushed next
+
+friends.remove("Liri Ketit")  #remove element "Jim"
+friends.pop()  #remove the last element of the list
+friends.clear()  #remove all elements from the list
+
+print(friends.index("Kevin"))  #print the index of the word "kevin" in our list/ check if element "Kevin exist in our list"
+
+
+numbers = list(range(10)) ,  #this is a list with 10 numbers with a range of numbers from 0-9 
+numbers = list(range(3,8)) , #this is a list with 5 numbers with a range from 3-8 (excluding 8)
+numbers = list(range(1,100,5)) #this is a list of numbers from 1-100(excluding 100), but with an interval of 5 digits: 1,6,11,16,21....etc
+
+print(friends.count("Jim"))  #how many times same element get shown
+
+
+#Sort by alphabetic order/ also same for numbers, will sort them in ascending order
+sorting = ["miri","beqo","liri","anxhelo"] 
+sorting.sort() , #-> To sort in descending order we set the reverse = True for example: sorting.sort(reverse = True)
+print(sorting)
+
+lucky_numbers.reverse()  #reverse the list
+print(lucky_numbers)
+
+friend2=friends.copy() #this will copy the friends list
+
+print(len(friends))  #print the length of the list
+
+ 
+print("Kevin" in friends)  #print True, since Kevin exist on the list 
+
+
+
+
+#Filter function -> filter out the data from the list 
+-----------------------------------------------------
+
+newlist = [1,3,4,5,7,2,9,11,13,6]
+result = list(filter(lambda x: x % 2 == 0,newlist))
+
+print(result) -> it prints even numbers
+
+
+#Generators are used to create certain type of lists -> we use the yield function to create
+-------------------------------------------------------------------------------------------
+
+def function():
+    counter = 0
+    while counter < 5:
+        yield counter
+        counter +=1
+
+
+def even_numbers(x):
+    for i in range(x):
+        if i % 2 == 0:
+            yield i
+
+for x in function():
+    print(x)
+
+print(list(function()))
+print(list(even_numbers(25)))
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Working with Tuples  -> a container where we can store different values / same as lists but instead of [] we use () and is unchangable.
+#once you create the tuple, we cant change it anymore, cant add, cant remove
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+coordinates = (4,5)
+
+print(coordinates)
+print(coordinates[0])
+print(coordinates[1])
+
+list_of_coordinates = [(4,5),(6,7),(80,34)] #list of tuples
+print(list_of_coordinates)
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Functions
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#To create a function we use the def word and the name of the function after, colon and keeping the format as example
+def sayHi():
+    print("Hello User")
+
+sayHi()
+
+#Giving a parameter of name
+def sayHi(name,age):
+    print("Hello " + name + " you are " + age)  #or      print("Hello " + name + " you are " + str(age)) to convert the integer to string
+
+sayHi("Anxhelo", "26")
+sayHi("Anxhelo",str(26))
+    #sayHi("Anxhelo", 26)   -> error
+
+
+def cube(num):
+    return num*num*num
+
+print(cube(3))
+
+
+
+#Function that takes as parameter a function
+def add_ten(x):
+    return x+10
+
+def twice(func,args):
+    return func(func(args))     -> this function should add the parameter twice, in this case "10"
+
+print(twice(add_ten,10))
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Lambda - same as functions but we dont have to name them, are like anonymos functions
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Lambda, 1(first)-paranthesis: mathematical expressions, 2(second)-paranthesis: value we want to pass
+result = (lambda x: x**2)(5)
+
+print(result)  
+
+#we can also print it directly without storing it in a variable
+print((lambda x: x**2)(5))
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Map - A map allows us to perform a single operation on a list
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+def add(x):
+    return  x+2
+
+newlist = [10,20,30,40,50]
+
+result = list(map(add,newlist))
+
+#using lambda instead of function
+result = list(map(lambda x: x*2,newlist)) 
+
+print(result)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Sets - it does not allow dublicate elements, different from lists we use curly braces
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+numbers = {1,2,3,4,5,6}
+print(numbers)
+
+#check if 5 is present in the set, True or False
+print(5 in numbers)
+
+#add a number to the set
+numbers.add(9)
+print(numbers)
+
+#remove any element we specify
+numbers.remove(4)
+print(numbers)
+
+#union elements of 2 sets with no dublicate entries
+setA = {1,2,3,4,5}
+setB = {4,5,6,7,8}
+
+print(setA | setB)
+
+#we print the elements that are common in both sets
+print(setA & setB)
+
+#substract setB from setA - removes elements of setB and common elements of setA that are in setB, so we get 1,2,3
+print(setA - setB)
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#If Statements
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+isMale = False
+isTall = True
+
+if isMale and isTall:
+    print("You are a tall male")               #True / True
+elif isMale and not(isTall):
+    print("You are a short Male")              #True / False
+elif not(isMale) and isTall:
+    print("You are not a Male but are tall")   #False / True
+else:
+    print("You are not a male and not tall")   #both false
+
+
+#If Statements and Comparisons
+
+def max_num(num1,num2,num3):          #find the maximum number using this function
+    if num1>num2 and num1>num3:
+     return num1
+    elif num2>num1 and num2>num3:
+     return num2
+    else:
+        return num3
+
+
+
+print(max_num(4,4,4))
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Building a better calculator in python
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+num1 = input("Enter first number: ")
+operator = input("Enter operator: ")
+
+while operator != "*" and operator != "+" and operator != "/" and operator != "-":
+    operator = input("Enter operator: ")
+
+num2 = input("Enter second number: ")
+
+if operator == "+":
+    result = float(num1) + float(num2)      #instead of adding float here, we can concatinate the hole input field: num1 = float(input("Enter first number: "))
+elif operator == "-":
+    result = float(num1) - float(num2)
+elif operator == "*":
+    result = float(num1) * float(num2)
+elif operator == "/":
+    result = float(num1) / float(num2)
+
+print(result)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Dictionaries    -> Allows us to store informations( key value pairs) , we refer to the value by the key.  We can store any type of data
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+monthConversions = {
+    "Jan": "January",
+    "Feb": "February",
+    "Mar": "March",
+    "Apr": "April",
+    "May": "May",
+    "Jun": "June",
+    "Jul": "July",
+    "Aug": "August",
+    "Sep": "September",
+    "Oct": "October",
+    "Nov": "November",
+    "Dec": "December",
+    0: "Beqo"
+}
+
+print(monthConversions["Nov"])        #we give the key, and we get the full name
+print(monthConversions.get("Dec"))    #we get the value but passing the key
+print(monthConversions.get("123","This key does not exist"))    #If the key doesnt exist we print the message: "This key does not exist"
+print("Dec" in monthConversions)      #get True or False by checking if the key "Dec" exist in our dictionary
+print("Luv","Not a valid key")        #instead of printing none for non existing keys, we give that a dafault value instead of none
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#While Loops
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+i = 1
+
+while i <= 10:
+    print(i)
+    i += 1    #same as i = i+1
+
+print("Done with loop")
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Building a guessing game
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+secretWord = "giraffe"
+guess = ""
+numberOfGuesses = 0
+guessLimit = 3
+
+
+while guess != secretWord and numberOfGuesses < guessLimit:
+    guess = input("Enter a guess: ")
+    numberOfGuesses += 1
+
+if numberOfGuesses <= guessLimit and guess == secretWord:
+    print("You win!")
+else:
+    print("You loose!")
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#For Loops
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+friends = ["Jim","Karen","Kevin"]
+
+
+for letter in "Giraffe Academy":    #This prints out letter by letter
+    print(letter)
+
+
+for friend in friends:    #print every element on that array
+    print(friend)
+
+
+for index in range(10):   #print out numbers from 0-10 , exluding 10
+    print(index)
+
+
+for index in range(3,10):   #print out numbers from 3-10 , exluding 10
+    print(index)
+
+
+for index in range(len(friends)):   #give us a range from 0-3(excluding 3) / len(friends) is to find the length of friends which is 3.
+    print(index)
+
+
+print(len(friends))  #printing the length of our list
+
+for index in range(5):
+    if index == 0:
+        print("First Iteration")
+    else:
+        print("Not first")
+
+
+print("Jim" in friends)  #to check if an element exist in the list, this will print true cuz Jim exist on the list 
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Exponent Function
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+print(2**3)  #2 in power of 3
+
+#way 1
+def raiseToPower(baseNumber, powerNumber):
+    result = 1
+
+    for index in range(powerNumber):
+        result = result * baseNumber
+
+    return result
+
+
+print(raiseToPower(2,4))
+
+
+#way 2 base on java code on my laptop
+def raiseToPower2(baseNumber, powerNumber):
+    result = 1
+    count = 1
+
+    while count <= powerNumber:
+        result = result * baseNumber
+        count +=1
+    return result
+
+
+
+print(raiseToPower2(5,4))
+
+#2D lists & Nested Loops
+
+number_grid = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9],
+    [0]
+]
+
+print(number_grid)  #print the hole 2d list
+
+print(number_grid[0]) #print the first list in the 2d list in this case [1,2,3]
+
+print(number_grid[0][2]) #print the number at index 2 of the list at index 0
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Nested For Loop
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+for row in number_grid:   #print all elements 1 by 1 
+    for col in row:
+        print(col)
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Make a transalor -> #shkruajm nje shprehje dhe cdo zanore e zevendesojm me 'g'
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+def translate(phrase):   
+    translation = ""
+    for letter in phrase:
+        if letter.lower() in "aeiou":       #-> same as if letter in "AEIOUaeiou":
+                if letter.isupper():
+                    translation = translation + "G"
+                else:
+                    translation = translation + "g"
+        else:
+            translation = translation + letter
+
+    return translation
+
+
+print(translate(input("Enter a phrase: ")))
+
+phrase = input("Enter second phrase: ")
+print(translate(phrase))
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Catching errors
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+try:
+    number = int(input("Enter a number:"))
+    print(number)
+except:
+    print("Invalid Input!")           #We are catching a general exception
+
+
+
+
+try:
+    value = 10 / 0
+except ZeroDivisionError:
+    print("Devided by zero not accepted!")    #We are catching ZeroDivisionError exception
+
+
+#We can also store the error in a variable
+try:
+    value = 10 / 0
+except ZeroDivisionError as err:
+    print(err)
+finally:
+    print('This is going to execute no matter what')	#Catching or not catching errors , it is going to execute	
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Reading Files
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+python_file = open("python.txt","r")  #here we store the file name in a variable with the role: r/read
+print(python_file.readable())         #this is a boolean value to check if the file is readable or not, it depands on the roles
+
+print(python_file.read())             #this prints the file text on the terminal
+print(python_file.readline())         #this prints the first line of the file
+
+print(python_file.readlines())        #this print the lines in a form of an array/list
+
+python_file.close()
+
+
+
+print(python_file.readlines()[1])     #we can also give an index to this file, by printing the line at index 1 of the list
+
+python_file = open("python.txt","r")   #we can also use for loops in this case of using .readlines() function
+for python in python_file.readlines():
+    print(python)
+python_file.close()
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Writing to Files
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+pythonFile = open("python.txt","a")  #'a' stands for append/shtoj , we have to only run 1 time cuz else it will add it multiple times.
+                                     #We use 'a' instead of w(write), cuz with 'a' we add smthng, with 'w' we override the file
+pythonFile.write("\nKelly - Customer Service")  #we use \n , to add this in a new line
+pythonFile.close()
+
+
+pythonFile2 = open("python2.txt","w")   #we can also create a new file using the file name with the 'w' permission
+pythonFile2.write("\nKelly - Customer Service")
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Reading & Writing
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Write,read
+file = open("demo.txt",'w')  #create the file
+file.write("This is the text written to the file")  #write inside file
+file.close()
+
+file = open("demo.txt",'r')  #open the file with read permission
+content = file.read()        #we store the content in a variable to print it on terminal
+print(content)
+file.close()
+
+file = open("demo.txt",'w')       #we open the file again with write permission
+file.write("This is second line") #we add a second line,
+file.close()
+
+file = open("demo.txt",'r')      #we read the file again
+content = file.read()            #we store the content in a variable to print it on terminal
+print(content)
+file.close()
+
+file = open("demo.txt",'a')                 #open the file with appended permission
+file.write("\nTHis is the appended line")   #we add this line 
+file.close()
+
+	
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Modules
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+In python we can use some prebuild modules. We can find them in google: list of python modules.
+And we install them and find them in external files in our project.
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Classes &  -> We created a class Student and an object of Student with a name , a major, gpa, and is_on_probation, using the __init__ function
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+from Student import Student
+
+student1 = Student("Jim","Business",3.1,False)  #Object of student 1
+student2 = Student("Pam","Marketing",2.1,True)
+
+print(student1.name)            #We can access any value we gave to our object
+print(student2.is_on_probation)
+
+
+                                          --------------------------------------------------------------------
+
+class Student:
+
+    def __init__(self,name,major,gpa,is_on_probation):
+        self.name = name
+        self.major = major
+        self.gpa = gpa
+        self.is_on_probation = is_on_probation
+
+
+
+----------------------------------------------------------------------
+
+class Students:
+
+    #we create the object of the class student
+    def __init__(self,name,contact):
+        self.name = name
+        self.contact = contact
+
+    #method 1
+    def getdata(self):
+        print('Accepting data')
+        self.name = input("Enter name: ")
+        self.contact = int(input("Enter contact:"))
+
+    #method 2
+    def putdata(self):
+        print('The name is: '+self.name ,' ,This is the contact: '+str(self.contact))
+
+
+
+John = Students("blank",694038597)
+John.getdata()
+John.putdata()
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Building a multiple quiz game
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+from Question import Question
+
+questionPrompts = [
+    "What color are apples?\n(a) Red/Green\n(b) Purple\n(c) Orange\n\n",
+    "What color are Bananas?\n(a) Teal\n(b) Magenta\n(c) Yellow\n\n",
+    "What color are strawberries?\n(a) Yellow\n(b) Red\n(c) Blue\n\n"
+]
+
+questions = [
+    Question(questionPrompts[0],"a"),
+    Question(questionPrompts[1],"c"),
+    Question(questionPrompts[2],"b")
+]
+
+
+def run_test(question):
+    score = 0
+    for question in questions:
+        answer = input(question.prompt)
+        if answer == question.answer:
+            score += 1
+
+    print("You got " + str(score) + "/"+str(len(questions)) + " Correct")
+
+
+run_test(questions)
+
+				---------------------------------------------------------
+
+class Question:
+
+    def __init__(self,prompt, answer):
+        self.prompt = prompt,
+        self.answer = answer
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Object Function
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+from Student import Student
+
+student1 = Student("Jim","Business",3.1,False)  #Object of student 1
+student2 = Student("Pam","Marketing",3.8,True)
+
+print(student1.on_honor_roll())
+print(student2.on_honor_roll())
+
+
+          ----------------------------------------------------
+class Student:
+
+    def __init__(self,name,major,gpa,is_on_probation):
+        self.name = name
+        self.major = major
+        self.gpa = gpa
+        self.is_on_probation = is_on_probation
+
+
+    def on_honor_roll(self):
+        if self.gpa >= 3.5:
+            return True
+        else:
+            return False
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Inheritance
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Exercise 1
+-----------
+
+from Chef import Chef
+from ChineseChef import ChineseChef
+
+myChef = Chef()
+myChef.make_special_dish()
+
+myChineseChef = ChineseChef()
+myChineseChef.make_special_dish()
+
+
+				-----------------------------------------------------------
+
+
+from Chef import Chef
+
+class ChineseChef(Chef):      #-> inheritance
+
+    def make_fried_rice(self):
+        print("The Chef makes fried rice")
+
+    def make_special_dish(self):
+        print("The chef makes Orange Chiken")
+
+
+				-----------------------------------------------------------
+
+
+class Chef:
+
+    def make_chicken(self):
+        print("The chef makes a chicken")
+
+    def make_salad(self):
+        print("The chef makes a salad")
+
+    def make_special_dish(self):
+        print("The chef makes a Lemon dish")
+
+
+---------------------------------------------------------------------------
+#Exercise 2:
+------------
+
+class Students:
+
+    #we create the object of the class student
+    def __init__(self,name,contact):
+        self.name = name
+        self.contact = contact
+
+
+    def getdata(self):
+        print('Accepting data')
+        self.name = input("Enter name: ")
+        self.contact = int(input("Enter contact:"))
+
+
+    def putdata(self):
+        print('The name is: '+self.name ,' ,This is the contact: '+str(self.contact))
+
+
+
+class ScienceStudent(Students):      #inherit from Students class
+
+    def __init__(self,age):
+        self.age=age
+
+
+    def science(self):
+        print("I am a science student!")
+
+
+Rob = ScienceStudent(20)
+Rob.science()
+
+#We inherit methods from Students class and use in our ScienceStudent class
+Rob.getdata()
+Rob.putdata()
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Recursion - Recursion is a Function that calls itself
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Factorial of 3 is 6: 3*2*1 . We will use Recursion to find the factorial of a number
+
+#Way 1
+def factoriall(x):
+    if x == 1:
+        return 1
+    else:
+        return x*(factoriall(x-1))
+
+
+#Way 2
+def factorialll(x):
+    while x>0:
+        return x * (factoriall(x - 1))
+    x-=1
+
+
+#Way 3 - selfmade
+def factorial(x):
+    result = 1
+    while x>0:
+        result = result * x
+        x-=1
+
+    return result
+
+
+result = factorial(10)
+result2 = factoriall(10)
+result3 = factorialll(10)
+
+print(result)
+print(result2)
+print(result3)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Itertools - Itertools is a module in Python, it is used to iterate over data structures that can be stepped over using a for-loop.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+from itertools import count,accumulate,takewhile
+
+#same as range() function
+for i in count(3):
+    print(i)
+
+    if i >=20:
+        break
+
+#Takes the previous numbers and current number and add them together
+numbers = list(accumulate(range(8)))
+print(numbers)
+
+#Takewhile from itertools
+print(list(takewhile(lambda x: x<=10,numbers)))
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Operator Overloading - We use operators to perform different things other than plus, minus
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class Point:
+
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+
+    #we perform overloading in the addition operation
+    #this allows us to perform 
+    def __add__(self, other):
+        x = self.x + other.x
+        y = self.y + other.y
+        return Point(x,y)
+
+    def __str__(self):
+        return "({0},{1})".format(self.x,self.y)
+
+
+point1 = Point(1, 4)
+point2 = Point(2, 8)
+print(point1 + point2)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Regular Expressions
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+import re           # -> this is the module we need to import for regular expressions
+
+#We can use it to verify if the user input is correct and follows the pattern
+
+
+pattern = r"eggs" # -> r is used for raw string,  the string should contain/start with 'eggs'
+
+#this search for the pattern in the beggining of the string. The string below doesnt starts with eggs so "not found" is printed
+if re.match(pattern,"baconeggseggsbacon"):
+    print('Match found!')
+else:
+    print('No match found!')
+
+
+#This search for the pattern anywhere in the string. 'Eggs' exist inside the string so 'Match found' is printed
+if re.search(pattern,'baconeggseggsbacon'):
+    print('Match found!')
+else:
+    print('Match not found!')
+
+#How many times the pattern is visible in the string
+print(re.findall(pattern,'baconeggseggsbacon'))
+
+
+#                 FIND AND REPLACE
+#Check for a match, if it exist, replace it with another string
+
+string = "My name is John, Hi I'm John"
+pattern = r"John"
+newstring = re.sub(pattern,"Rob",string)   # 1- argument is for the pattern we are looking,
+                                           # 2- is for the string we want to use instead of the match
+                                           # 3- is for the string we are looking into
+print(newstring)
+
+
+
+#                THE "."(DOT) METACHARACTER
+
+pattern2 = r"gr.y"    #we define a pattern which starts with 'gr' and ends with 'y'.
+                      # THe "." we used in the pattern2 says that we can have any character there
+
+if re.match(pattern2,"gray"):
+    print("Match found!")
+
+
+
+
+#                THE CARET AND DOLLAR METACHARACTER
+
+pattern3 = r"^gr.y$"           # ^ -> signifies the starting point of the string, &-> signifies the ending point of the string
+
+if re.match(pattern3,"grby"):
+    print("Match 1 ")
+
+
+#                CHARACTER CLASS
+
+#Format of our apartment name is AA1 , character,character,number
+pattern4 = r"[A-Z][A-Z][0-9]"
+
+if re.search(pattern4,"AA1"):   #this string("AA1") matches with the pattern we have.
+    print('Match found!')
+
+
+#                STAR METACHARACTER
+
+pattern5 = r"eggs(bacon)*"    #the bacon can be repeted multiple times or we can have no bacon at all. But "eggs" string is necessary
+
+if re.match(pattern5,"eggsbaconbacon"):
+    print("match found!")
+
+
+
+#                 GROUP
+
+pattern6 = r"bread(eggs)*bread"   #between this "breads" we can have 0-multiple eggs.
+
+if re.match(pattern6,"breadeggseggsbread"):
+    print("Match founddd")
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------

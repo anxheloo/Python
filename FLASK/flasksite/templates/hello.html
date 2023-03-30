@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+
+	<!-- to refer to our js file -->
+	<script type="text/javascript" src="{{ url_for('static', filename='hello.js') }}" ></script> 
+
+</head>
+<body>
+	<h1>This is from template</h1>
+	<h2>Welcome {{ name }}</h2>
+
+	<!-- we add an input type that when we click it, it executes the sayHi() function from hello.js file -->
+	<input type="button" onclick="sayHi()" value="Say Hi">
+
+</body>
+</html>

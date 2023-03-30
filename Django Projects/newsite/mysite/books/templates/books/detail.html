@@ -1,0 +1,26 @@
+{% extends 'books/base.html' %}
+{% load static %}
+
+
+{% block body %}
+<html>
+<head>
+
+</head>
+
+
+
+<body>
+    <div style="margin-top:50px; margin-left:20px">
+<!--            <h1>{{get_book_by_id.name}}</h1>-->
+<!--            <h4>{{get_book_by_id.author}}</h4>-->
+
+<!--        We use the book keyword to get the book attributes for Generic Views-->
+        <h1>{{book.name}}</h1>
+        <h4>{{book.author}}</h4>
+    </div>
+
+</body>
+</html>
+{% endblock %}
+

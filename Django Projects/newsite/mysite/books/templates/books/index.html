@@ -1,0 +1,38 @@
+{% extends 'books/base.html' %}
+{% load static %}
+
+
+{% block body %}
+<html>
+<head>
+
+</head>
+
+
+
+<body>
+
+
+<!--<ul style="margin-top:50px">-->
+<!--    {% for x in all_books %}-->
+<!--    &lt;!&ndash; <li><a href ="{% url 'detail' x.id %}">{{x.name}}</a> </li> &ndash;&gt;-->
+<!--    <li><a href ="/books/{{x.id}}/">{{x.name}}</a> </li>-->
+<!--    {% endfor %}-->
+<!--</ul>-->
+
+
+<!--We use this for Generic Views-->
+<ul style="margin-top:50px">
+    {% for x in object_list %}
+<!--     <li><a href ="{% url 'detail' x.id %}">{{x.name}}</a> </li>-->
+    <li><a href ="/books/{{x.id}}/">{{x.name}}</a> </li>
+<!--    We want to display also the book image-->
+    <img src="{{x.book_image}}">
+    {% endfor %}
+</ul>
+
+
+</body>
+</html>
+{% endblock %}
+

@@ -1,0 +1,378 @@
+===================================================================================================================================================================================
+1#SETUP -> Flask is a Web-Framework for Python that is lightweight and is fast to develop easy web apps
+===================================================================================================================================================================================
+
+1-We create a folder for our project similar to django
+2-We create a virtual envirenment so our project dont interfere with each other
+3-Go to the Folder Directory we created -> from CMD or Terminal -> python -m venv 'your virtual envirenment name'
+4-Navigate to envirenment folder we just created -> navigate to scripts -> in terminal write >> activate
+5-We go back to flask folder directory and from termial >> pip install flask
+	
+	1)To check that we have install flask with no problem, from Flask folder directory in terminal >>python 
+	2)>>>from flask import Flask  
+	3)>>>     #if this is shown everything is okey , 
+	4)CTRL + C or CTRL + Pause/Break -> to quit
+
+6-After we quited the process in step 5/4 , we have to create some directories to store specific files like static(images,css,js etc..) & templates(html etc)
+
+	#From flask folder directory: 
+
+	-mkdir static
+	-mkdir templates
+
+7-We go to static directory & create 3 more directories: 
+	
+	-mkdir css    (for css)
+	-mkdir js     (for javascript)
+	-mkdir images (for images)
+ 
+
+===================================================================================================================================================================================
+2#Hello world in Flask & Routing & Variables
+===================================================================================================================================================================================
+
+	-Inside project folder, we create a text file, open it & save as : File name: app.py
+									   File type: All Files
+
+	-We edit that file with e text editor, we can also use IDE but we can simply go with e text editor(Sublime Text)
+
+	-In text editor:  
+	
+		from flask import Flask
+
+		#We need to create an app with a name
+		app = Flask(__name__)
+
+
+		#Whenever we write web apps using Flask, we need to associate a URL with a function
+		@app.route('/')
+		def hello():
+			return 'Hello World'
+
+
+		#Lets create a new route. 1)Close the server. 2)Type the code for a new page(url) 3)Run the server again
+		@app.route('/new')
+		def book():
+			return 'New Page!'
+
+
+		#We can also pass a variable to the url and build a function that takes that variable as parameter and use it to return smthng.
+		@app.route('/new/<name>')  #for integers we use: @app.route('/new/<int:id>')
+		def profile(name):
+			#return 'This profile belongs to: '+ name   #-> We can use each one of these
+			return "this profile belongs to %s" %name   #-> We can use each one of these | For integer we use %d 
+
+
+		#To run this app
+		if __name__ == '__main__':
+			app.run()
+
+	
+	-Now we go to terminal and navigate to flask project directory, we write in terminal >>python app.py     -> to run the server
+
+
+
+===================================================================================================================================================================================
+#Dynamic URL | Redirect
+===================================================================================================================================================================================
+
+		from flask import Flask, redirect, url_for
+
+		#We need to create an app with a name
+		app = Flask(__name__)
+
+		@app.route('/admin')
+		def hello_admin():
+			return 'Hello admin'
+
+
+
+		@app.route('/guest/<guest>')
+		def hello_guest(guest):
+			return 'Hello guest %s' %guest
+
+
+		#Dynamic URL, if /user/admin we redirect to the function hello_admin, If user/'whatever name' we redirect to the function hello_guest
+		@app.route('/user/<name>')
+		def hello_user(name):
+			if name == 'admin':
+				return redirect(url_for('hello_admin'))
+
+			else:
+				return redirect(url_for('hello_guest', guest = name ))
+
+
+		#To run this app
+		if __name__ == '__main__':
+			app.run()
+
+
+
+
+===================================================================================================================================================================================
+#Passing Data From WebPage to The Server
+===================================================================================================================================================================================
+	
+	1-We create a text file -> open it -> save as -> login.html , allfiles -> Open with sublime text or another app to adit
+	2-We will be able to accept some inputs from users (lets design a form), and than by entering a value from user, the server is going to display that value to the page
+	3-Whenever the user enters a value and hits submit, we want to redirect to a new page and that value is going to be passed to that new page
+	4-We create the form, method = POST , inside the login.html and gives it the action: http://localhost:5000/login 
+	5-When we hit submit it goes to the method login we created on our app.py, than from there it redirects to the method we created to handle it like the example below
+
+
+app.py 														login.html
+------														--------------
+from flask import Flask, redirect, url_for, request                                                            <!DOCTYPE html>
+ 
+#We need to create an app with a name										<body>
+app = Flask(__name__)													<form action="http://localhost:5000/login" method="post">
+															  <p>Enter your name:</p>
+															  <p><input type="text" name="nm"></p>
+															  <p><input type="submit" value="submit"></p>
+@app.route('/success/<name>')												</form>
+def success(name):												</body>
+	return "welcome %s" %name
+
+
+
+@app.route('/login',methods=['POST','GET'])
+def login():
+	if request.method == 'POST':
+		username = request.form['nm']
+		return redirect(url_for('success',name = username))
+	else:
+		username = request.args.get('nm')
+		return redirect(url_for('success',name = username))
+
+
+
+#To run this app
+if __name__ == '__main__':
+	app.run()
+
+===================================================================================================================================================================================
+#Templates | Passing Data To Templates | We create templates folder to put our html files inside and use them with render_template instead of writing 'return html code'
+===================================================================================================================================================================================
+
+from flask import Flask, redirect, url_for, request,render_template
+
+#We need to create an app with a name
+app = Flask(__name__)
+
+
+
+@app.route('/')
+def index():
+	return render_template('hello.html')
+
+
+#we can also pass data to templates, we pass a username to this link and return render_template('hello.html', name = username). 
+On hello.html file we add : <h2>Welcome {{ name }}</h2> we pass the 'name'( variable ) which is equal to username (variable we pass in the link)
+@app.route('/welcome/<username>')
+def passingDataToTemplates(username):
+	return render_template('hello.html', name = username)
+
+
+#To run this app
+if __name__ == '__main__':
+	app.run()
+
+
+===================================================================================================================================================================================
+#Passing JS files to Flask | Using static files
+===================================================================================================================================================================================
+
+1-We created a hello.js file and placed it in static folder
+2-In order to reference to it to html code(templates), we add at our hello.html file: <script type="text/javascript" src="{{ url_for('static', filename='hello.js') }}" ></script> 
+3-Than we add an input type at hello.html body that when we click it, it executes the sayHi() function from hello.js file, <input type="button" onclick="sayHi()" value="Say Hi">
+
+
+
+===================================================================================================================================================================================
+#Passing Form Data To Templates
+===================================================================================================================================================================================
+
+	1-When we hit submit button, the website is going to redirect us to the new page which is "/result"
+	2-Make a new file called student in templates, with e method POST and an action that sends to /result
+	3-Create the result.html page and we create a table there that displays the form data we will get and iterate to display them
+	4-We go to app.py main python file : 
+
+
+
+
+from flask import Flask, redirect, url_for, request,render_template
+
+#We need to create an app with a name
+app = Flask(__name__)
+
+#We set student.html as main root
+@app.route('/')
+def student():
+	return render_template('student.html')
+
+#the /result link as a method named result that if request.method is POST, it gets all the data from the form and display them in result.html
+@app.route('/result', methods= ['POST','GET'])
+def result():
+	if request.method == 'POST':
+		# this extracts all the data that are stored in the form
+		result = request.form
+		#we save the value result we use in html, at result value we created to save the extracted values
+		return render_template('result.html', result = result)
+
+
+#To run this app
+if __name__ == '__main__':
+	app.run()
+ 
+
+
+===============
+student.html : 
+==============
+<body>
+
+	<form action="http://localhost:5000/result" method="POST">
+		<p> Name <input type="text" name="Name"></p>
+		<p> Phy <input type="text" name="Phy"></p>
+		<p> Chem <input type="text" name="Chem"></p>
+		<p> Math <input type="text" name="Math"></p>
+		<p><input type="submit" value="submit"></p>
+	</form>
+</body>
+
+============
+result.html
+============
+
+	<table border="1">
+		{% for key, value in result.items() %}
+			<tr>
+				<th>{{key}}</th>
+				<td>{{value}}</td>
+			</tr>
+		{% endfor %}
+	</table>
+
+
+
+===================================================================================================================================================================================
+#Using Cookies in Flask
+===================================================================================================================================================================================
+
+We will create a form with 2 things: 
+	-Is going to accept users name 
+	-A submit button
+	
+After entering a name and hit submit, the user will post at /setcookie and will be redirect to readcookie.html which has an hyperlink ancor tag that redirects to /getcookie 
+
+
+=======
+app.py
+=======
+
+# Using Cookies
+@app.route('/')
+def index():
+	return render_template('index.html')
+
+
+@app.route('/setcookie', methods= ['POST','GET'])
+def setcookie():
+	if request.method == 'POST':
+		user = request.form['nm'] #we store the user attribute which is called 'nm' 
+
+		resp = make_response(render_template('readcookie.html'))
+		resp.set_cookie('userID',user)
+
+		return resp
+
+
+
+@app.route('/getcookie')
+def getcookie():
+	name = request.cookies.get('userID')
+	return '<h1>Hello ' + name + ' </h1>'
+
+
+
+
+===============
+readcookie.html
+===============
+
+<body>
+	<a href="http://localhost:5000/getcookie">Click here to read the cookie</a>
+</body>
+
+
+
+===========
+index.html
+===========
+<body>
+	<form action="/setcookie" method='POST'>
+		<p><input type="text" name="nm"/></p>
+		<p><input type="submit" value="submit"/></p>
+	</form>
+</body>
+
+===================================================================================================================================================================================
+
+===================================================================================================================================================================================
+
+
+
+
+
+
+===================================================================================================================================================================================
+
+===================================================================================================================================================================================
+
+
+
+
+
+
+===================================================================================================================================================================================
+
+===================================================================================================================================================================================
+
+
+
+
+
+
+===================================================================================================================================================================================
+
+===================================================================================================================================================================================
+
+
+
+
+
+
+===================================================================================================================================================================================
+
+===================================================================================================================================================================================
+
+
+
+
+
+
+===================================================================================================================================================================================
+
+===================================================================================================================================================================================
+
+
+
+
+
+
+===================================================================================================================================================================================
+
+===================================================================================================================================================================================
+
+
+

@@ -1,0 +1,568 @@
+1-DOWNLOAD mySQL FOR WINDOWS - https://dev.mysql.com/downloads/installer/.
+2-INSTALL ALL THE FEATURES OR USE CUSTOM INSTALL, REMEMBER THE PASSWORD, USERNAME IS root.
+3-OPEN SQL COMMAND LINE - TYPE PASSWORD, create database 'name';
+4-YOU CAN DOWNLOAD popSQL TO HAVE A CLEAR AND MORE USEFUL ENVIRENMENT TO WORK, LINK popSQL WITH YOUR LOCAL(own created server) SERVER.
+
+
+
+
+-INT				-- WHOLE NUMBERS
+
+-DECIMAL(M,N)			--DECIMAL NUMBERS - EXACT VALUE  --> EXAMPLE: DECIMAL(10,5)  -> WE WANT TO STORE A NR. WITH 10 TOTAL DIGITS, WITH 4 DIGITS AFTER THE DECIMAL PLACE.
+
+-VARCHAR(1)			--STRING OF TEXT OF LENGTH 1     --> EXAMPLE: VARCHAR(100)   -> WE WANT TO STORE A STRING WITH 100 MAXIMUM AMOUNT OF CHARACHTERS
+
+-BLOB				--BINARY LARGE OBJECT, STORES LARGE DATA  -> USED MOSTLY FOR IMAGES AND FILES
+
+-DATE				--'YYYY-MM-DD'
+
+-TIMESTAMP			--'YYYY-MM-DD HH:MM:SS'
+
+
+
+                                We write the table components in small letters to differentiate from SQL code.
+
+CREATE TABLE book (
+id iNT PRIMARY KEY AUTO_INCREMENT,
+isbn VARCHAR(25) ADD UNIQUE, 
+name VARCHAR(50),
+author_id INT,
+genre_id INT,
+quantity INT,
+publisher VARCHAR(50),
+price DOUBLE,
+date_received DATETIME,
+description TEXT,
+cover LONGBLOB
+);
+
+
+
+DESCRIBE student;  --> SHOWS US THE COLUMNS WE JUST CREATED. 
+
+DROP TABLE student; --> REMOVE THE TABLE. TO CREATE AGAIN GO CLICK ON "CREATE TABLE student()" code, AND HIT RUN.
+
+ALTER TABLE student ADD gpa DECIMAL(3,2); --> ADD A SPECIFIC COLUMN.
+ALTER TABLE student DROP COLUMN gpa;  --> WE REMOVE THE COLUMND gpa.
+
+INSERT INTO student VALUES(1,'Jack','Biology'); --> WE INSERT THE VALUES BY ORDER, 1 - student_id, 'Jack' - name, 'Biology' - major.  
+To insert another student, we keep this line of code and just change the VALUES, or Create Another INSERT LINE OF CODE. for Example: 2 - student_id, 'Kate' - name, 'Sociology' - major. And hit run.
+
+INSERT INTO student(student_id,name) VALUES(4,'Bate');  --> To insert a student that only has 2 VALUES. WE SPECIFY THE VALUES WE NEED AND THAN ENTER THEM.
+
+SELECT * FROM student;  --> GIVES US ALL THE INFORMATION FROM THE student TABLE.
+
+
+CREATE TABLE student (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(20) NOT NULL,   --> The name value cannot be null.
+    major VARCHAR(20)  UNIQUE	 --> The major value must be unique, if another row has the same major it has to be rejected.
+
+	-student_id INT PRIMARY KEY AUTO_INCREMENT, --> This will Incerement the ID automatically, we dont have to enter it as a value, we just enter the name and major.
+);
+
+
+  major VARCHAR(20)  DEFAULT 'undecided'  --> When we dont put a value there, it will automatically populate it with the value "undecited".
+
+
+
+
+==============================================================================================================================================================================
+                                                                UPDATE AND DELETE ROWS inside a TABLE:
+==============================================================================================================================================================================
+
+
+
+
+
+UPDATE student                 (student is the name of the table)
+SET major = 'Finance'	       ( we SET the major equals to the new major we want to set)
+WHERE major = 'Fiance';	       ( in the row where major is equal to the major we want to change).
+
+
+UPDATE student
+SET major = 'Comp Sci'
+WHERE student_id = 6;        We set the condition for the student_id = 6. So the row where student_id = 6, will be affected by the UPDATE.
+
+
+UPDATE student
+SET major = 'Economics'
+WHERE major ='Math' OR major ='Finance';  We can also combine the condition using OR. So every student with major = "Math" Or major = "Finance" will be updated to "Economics".
+
+
+UPDATE student
+SET name ='Tom',major = 'undecited'
+WHERE student_id = 1;                    WE can combine VALUES in the SET line also. The student with ID = 1, Will have its name and major updated.
+
+
+UPDATE student
+SET major = 'undecited';   This will UPDATE every row and put major = 'undecited'.
+
+
+DELETE FROM student;   This will delete every row in the table student.
+
+DELETE FROM student
+WHERE student_id = 5;   This will delete the row where the student_id = 5.
+
+
+DELETE FROM student
+WHERE name ='TOM' AND major = 'undecited';  This will affect the row where student name = "Tom" AND student major ="undecited",
+
+
+
+
+==============================================================================================================================================================================
+                                                                              QUERIES - PLAY AND COMBINE THEM
+==============================================================================================================================================================================
+
+
+OPERATORS:     < , > , <=, >= , =, <>(not equal) , OR , AND
+
+
+
+SELECT name
+FROM student;    --> in this way to get all the student names from the student TABLE.
+
+SELECT student.name, student.major  --> This is a better way of writing ecpecially when we deal with a lot of TABLES.
+FROM student;
+
+
+SELECT student.name, student.major 
+FROM student
+ORDER BY name;    --> This will order by alphabet.
+
+
+SELECT *
+FROM student
+ORDER BY student_id DESC ;  --> Order by student_id in descending order. Example: 5,4,3,2,1
+
+
+SELECT *
+FROM student
+ORDER BY student_id ASC ;  --> ORder by student_id in Ascending order. Example: 1,2,3,4,5
+
+
+SELECT *
+FROM student
+ORDER BY major,student_id ;  --> Order by major first, and if the major is the same, order by student id. We can also use DESC or ASC.
+
+
+SELECT *
+FROM student
+LIMIT 2;          --> WE limit the number of datas we get from student table by 2. We only get the first 2 datas.
+
+
+SELECT *
+FROM student
+ORDER BY student_id DESC
+LIMIT 2;           --> WE can also order by student_id while LIMIT by 2. WE get the last 2 datas.
+
+
+SELECT *
+FROM student
+WHERE student_id < 4;    --> SElect all from student table, where student_id is less than 4. It will get rows where student_id is 1,2,3.
+
+
+SELECT *
+FROM student
+WHERE name IN('Kate','Noel');  --> Select all from student table where name is Kate, Noel. If any student has the name = Kate or Noel, get them.
+
+----------------------
+
+
+
+
+ALTER TABLE employee
+ADD FOREIGN KEY(branch_id)
+REFERENCES branch(branch_id)
+ON DELETE SET NULL;                   --> To link a column of TABLE employee with a column of TABLE branch.
+
+ON DELETE SET NULL : When we delete a row that holds a value linked to a foreign key, it by default will be set to NULL in the other table.
+ON DELETE CASCADE: When the foreign key is also a primary key we have to use this because a primary key cannot be set to NULL. 
+---------------------------------------------
+
+When you work with FOREIGN KEY, take the information input by order. Watch mike on : 2:20 https://www.youtube.com/watch?v=HXV3zeQKqGY&t=8344s
+
+
+
+
+==============================================================================================================================================================================
+								MORE BASIC QUERIES
+==============================================================================================================================================================================
+
+  --MORE BASIC QUERIES
+
+--select all employess from employee table order by salary
+SELECT *
+FROM employee
+ORDER BY salary;
+
+--Find all employees ordered by sex than name
+
+SELECT *
+FROM employee
+ORDER BY sex,first_name,last_name;
+
+--FInd the first 5 employees in the table
+
+SELECT *
+FROM employee
+LIMIT 5;
+
+--Find the first and last names of all employees 
+
+SELECT first_name,last_name
+FROM employee;
+
+--Find the forenames and surnames of all employees (this will return the first_name and last_name but instead of naming the column as it is: first_name,last_name, it will be named forename and surname)
+
+SELECT first_name AS forename,last_name AS surname
+FROM employee;
+
+--Find out all the different genders 
+
+SELECT DISTINCT sex
+FROM employee;
+
+--Find out all the different branch_id 
+SELECT DISTINCT branch_id
+FROM employee;
+
+
+
+==============================================================================================================================================================================
+								SQL FUNCTIONS
+==============================================================================================================================================================================
+
+
+--Find the number of employees
+SELECT COUNT(employee_id)
+FROM employee;
+
+SELECT COUNT(first_name)
+FROM employee;
+
+SELECT COUNT(super_id)
+FROM employee;
+
+--Find the number of female employees born after 1970
+SELECT COUNT(employee_id)
+FROM employee
+WHERE sex = 'F' AND birth_date > '1970-01-01';
+
+--FInd the avarage of all employees salaries
+SELECT AVG(salary)
+FROM employee;
+
+--FInd the avarage of all male employees salaries
+SELECT AVG(salary)
+FROM employee
+WHERE sex = 'M';
+
+--FInd the sum of all employee salaries 
+SELECT SUM(salary)
+FROM employee;
+
+--Find out how many males and females are there
+SELECT COUNT(sex),sex
+FROM employee
+GROUP BY sex;
+
+--Find the total sales of each salesman
+SELECT SUM(total_sales), employee_id
+FROM works_with
+GROUP BY employee_id;
+
+--HOW much money each client actually spend with the branch 
+SELECT SUM(total_sales), client_id
+FROM works_with
+GROUP BY client_id;
+
+
+
+==============================================================================================================================================================================
+										WILDCARDS
+==============================================================================================================================================================================
+
+-- % = any # characters, _ = one character
+
+--Find any client who are an LLC
+SELECT *
+FROM client
+WHERE client_name LIKE '%LLC';
+
+--Find any branch suppliers who are in the label business
+
+SELECT * 
+FROM branch_supplier
+WHERE supplier_name LIKE '%label%';    --if we use '%labels' ,it will still show but with 1 '%' we need to input the exact word we are looking
+
+
+--Find any employee born in October
+SELECT *
+FROM employee 
+WHERE birth_date LIKE '____-10%';   
+
+--Find any client that are schools
+
+SELECT *
+FROM client
+WHERE client_name LIKE '%school%';
+
+
+
+==============================================================================================================================================================================
+                                                       				UNION
+==============================================================================================================================================================================
+
+--UNION -> we use union to unite 2 SELECTs in a single column. But the first rule is to have the same amount of columns, also similar data types.
+
+
+
+							--Find a list of employee and branch names
+
+SELECT first_name
+FROM employee
+UNION
+SELECT branch_name
+FROM branch;
+
+
+
+							--Find a list of all clients and branch suppliers names
+
+SELECT client_name,branch_id
+FROM client
+UNION
+SELECT supplier_name,branch_id
+FROM branch_supplier;
+
+
+
+							--Find a list of all money spent or earned by the company
+
+SELECT salary
+FROM employee
+UNION
+SELECT total_sales
+FROM works_with; 
+
+==============================================================================================================================================================================
+										JOINS
+==============================================================================================================================================================================
+
+ 
+		--Find all branches and the names of their managers
+		-- in this example we have included the branch_name in the SELECT code in the begining, cuz when  we use the JOIN, we can grab branch names from other table.
+
+SELECT employee.employee_id,employee.first_name,branch.branch_name 
+FROM employee
+JOIN branch
+ON employee.employee_id = branch.mgr_id;
+
+
+
+--when we use LEFT JOIN, all the rows in the employee table are going to be included but only the rows in the branch table that matched the condition are going to be included.
+
+SELECT employee.employee_id,employee.first_name,branch.branch_name 
+FROM employee
+LEFT JOIN branch
+ON employee.employee_id = branch.mgr_id;
+
+
+SELECT employee.employee_id,employee.first_name,branch.branch_name 
+FROM employee
+RIGHT JOIN branch
+ON employee.employee_id = branch.mgr_id;
+
+
+==============================================================================================================================================================================
+										NESTED QUERIES
+==============================================================================================================================================================================
+
+
+
+--Find names of all employees who have sold more than 30.000 to a single client
+
+--works_with.total_sales
+--works_with.employee_id
+--SELMADE 
+
+SELECT DISTINCT employee.employee_id,employee.first_name,employee.last_name
+FROM employee
+JOIN works_with
+ON employee.employee_id = works_with.employee_id
+WHERE total_sales > 30000;
+
+
+
+
+SELECT employee.first_name,employee.last_name
+FROM employee
+WHERE employee.employee_id IN (
+    SELECT works_with.employee_id
+    FROM works_with
+    WHERE works_with.total_sales > 30000
+);
+
+
+				--FIND all clients who are handled by the branch that Michael Scott manages. Assume that you know the Michaels' ID.
+
+SELECT client.client_name
+FROM client
+WHERE client.branch_id = (
+    SELECT branch.branch_id
+    FROM branch
+    WHERE branch.mgr_id = 102
+    LIMIT 1   
+);
+
+--we use limit because if Michael Scoot was managing multiple branches it would return multiple values
+
+
+
+=============================================================================================================================================================================
+										TRIGGERS
+==============================================================================================================================================================================
+
+CREATE TABLE triggers_test(
+    message VARCHAR(100)
+);
+
+
+            --
+SELECT * FROM triggers_test;    
+DROP TABLE triggers_test;       --delete trigger_test table
+DROP TRIGGER my_trigger;        --delete trigger
+SHOW TRIGGERS;                  --show created triggers
+            --
+
+
+DELIMITER $$
+CREATE TRIGGER my_trigger BEFORE INSERT 
+    ON employee
+    FOR EACH ROW BEGIN 
+    INSERT INTO triggers_test VALUES('added new employee');
+    END $$
+DELIMITER ;   
+-------------------------------------------------------------                             
+         -- we have to change the delimiter on the command line because we cant change here in popsql.
+         --we can also do it here in the terminal, just delete the delimiters and at the "END" we put ; instead of $$ created by delimiters. Couldnt do here for multiple triggers!                       
+-------------------------------------------------------------
+
+
+CREATE TRIGGER my_trigger1 BEFORE INSERT 
+    ON employee
+    FOR EACH ROW BEGIN 
+    INSERT INTO triggers_test VALUES(NEW.first_name);
+    END;
+
+    --we can also do it in the sql command line like the first example
+
+    INSERT INTO employee VALUES(109,'KON','Lah','1964-10-20',NULL,69000,106,3);
+    DELETE FROM employee
+    WHERE employee_id = 109;
+
+
+DELIMITER $$
+    CREATE TRIGGER my_trigger2 BEFORE INSERT
+    ON employee
+    FOR EACH ROW BEGIN
+        IF NEW.sex = 'M' THEN
+            INSERT INTO triggers_test VALUES('a new male employee added');
+        ELSEIF NEW.sex = 'F' THEN
+            INSERT INTO triggers_test VALUES('a new female employee added');
+        ELSE 
+            INSERT INTO triggers_test VALUES ('a new employee added');
+        END IF;
+    END$$
+DELIMITER ;
+
+
+----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+
+
+show databases;
+use library;
+
+CREATE TABLE book_genres(
+id INT PRIMARY KEY AUTO_INCREMENT, 
+name VARCHAR(100)
+);
+
+CREATE TABLE author(
+id INT PRIMARY KEY AUTO_INCREMENT, 
+firstName VARCHAR(20),
+lastName VARCHAR(50),
+expertise VARCHAR(100),
+about TEXT
+);
+
+CREATE TABLE members (
+id INT PRIMARY KEY AUTO_INCREMENT, 
+firstName VARCHAR(20),
+lastName VARCHAR(20),
+phoneNumber VARCHAR(20),
+email TEXT(100),
+picture LONGBLOB
+);
+
+delete from members where id = 1;
+
+ALTER TABLE members ADD gender VARCHAR(20);
+
+SELECT COUNT(id)  AS TOTAL FROM book;
+
+CREATE TABLE book (
+id iNT PRIMARY KEY AUTO_INCREMENT,
+isbn VARCHAR(25) UNIQUE, 
+name VARCHAR(50),
+author_id INT,
+genre_id INT,
+quantity INT,
+publisher VARCHAR(50),
+price DOUBLE,
+date_received DATETIME,
+description TEXT,
+cover LONGBLOB
+);
+
+INSERT INTO book(isbn, name, author_id, genre_id, quantity, publisher, price, date_received, description, cover) VALUES ('isbn','Ferdi','1','2','4','Helga','1200','1999-05-05','Got this','NULL');
+alter table book add UNIQUE (isbn);
+
+show tables;
+SELECT DISTINCT(isbn) FROM book;
+select cover from book;
+
+
+create table issue_book (
+book_id INT,
+member_id INT,
+status VARCHAR(30),
+issue_date DATE,
+return_date DATE,
+note TEXT
+);
+
+select * from issue_book;
+
+SELECT COUNT(*) AS TOTAL FROM issue_book WHERE book_id = 2 AND status = 'issued';
+
+create table users_table (
+id INT PRIMARY KEY AUTO_INCREMENT, 
+firstname VARCHAR(25),
+lastname VARCHAR(25),
+username VARCHAR(25),
+password VARCHAR(50),
+usertype VARCHAR(25)
+);
+
+select * from users_table;
+insert into users_table values('4','Anxhelo','Cenollari','Anxheloo','Anxheloo1','owner');
+
+
+ALTER TABLE books add CONSTRAINT fk_author_id FOREIGN KEY (author_id) REFERENCES author(id) on UPDATE CASCADE on DELETE CASCADE
+ALTER TABLE books add CONSTRAINT fk_genre_id FOREIGN KEY (genre_id) REFERENCES book_genres(id) on UPDATE CASCADE on DELETE CASCADE
+ALTER TABLE issue_book add CONSTRAINT fk_book_id FOREIGN KEY (book_id) REFERENCES book(id) on UPDATE CASCADE on DELETE CASCADE
+ALTER TABLE issue_book add CONSTRAINT fk_member_id FOREIGN KEY (member_id) REFERENCES members(id) on UPDATE CASCADE on DELETE CASCADE

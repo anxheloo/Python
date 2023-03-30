@@ -1,0 +1,213 @@
+   LINUX COMMANDS FOR TERMINAL  
+
+
+-man , command is short for manual and is used to get the manual for everything u need, for example man man , u are asking for manual for the manual
+
+---------------------------------------------------------------------------------------------------
+WORKING WITH DIRECTORIES
+---------------------------------------------------------------------------------------------------
+
+- pwd command is used : print name of the current working directory
+
+- cd stands for change directory
+	-to go back we use also cd, cd .. , this moves you back 1 directory
+
+- ls, stands for list, ls -a is for list all, also hidden folders
+		       ls -l is for list all in a list with other infos 
+		       ls -la is a combination of both above	
+
+- mkdir, is similar to create a new folder, u just have to make sure about the directory u are in
+	mkdir -p folder2/folder5 , create parent folder2 and folder5 inside folder2
+
+
+- nixh@ubuntu22:~/Documents$ mkdir -p Linux/Ubuntu/nixh 
+
+We are creating a directory called Linux which is under Documents folder, that has an Ubuntu folder, which has a nixh folder
+
+- rmdir,  is for remove empty directory , be careful cuz this command only delete empty directories
+
+- rmdir -p Linux/Ubuntu/nixh,  to delete the hole directory/ parent which in this case is Linux, under Documents folder/directory
+- rmdir -pv folder10/folder2, the same as above but it also prints some logs on the screen
+- rm -r, delete all directory with subdirectories inside
+
+----------------------------------------------------------------------------------------------------
+WORKING WITH FILES
+----------------------------------------------------------------------------------------------------
+
+- file , this command gives us info about a file in a directory
+- touch "filename.txt" , we create a file inside a directory
+- rm file1.txt , we remove the file1.txt
+- rm -i file2.png file3.svg 
+
+- cp , copy command
+- cp file1.txt file1cp.txt , copy file1 inside the same directory
+- cp file1.txt /home/nixh/Documents, copy file1.txt inside this absolute Directory 
+- ls /home/nixh/Documents , list a specific directory 
+
+cp -r test testcp , copy the directory/folder test in the same directory with the name testcp
+
+- mv file1.txt file2.txt , rename the file1 with the new name: file2
+- mv file2.txt test/file3.txt , move file2 to the directory test/ with the new name file3
+
+- head README.rd, print in the terminal the first 10 lines of e file 
+- head -5 README.rd, print in the terminal the first 5 lines of e file 
+- tail README.rd print in the terminal the last 10 lines of a file 
+
+- vi , is a command to view a file
+
+- cat README.rd , display the file in the terminal , we can also display multiple files using cat.
+
+- cat >> text2.txt , this command let us insert text inside this existing file, 
+    if it doesnt exist it creates the file and also lets us write inside it. ctrl + d to get out.
+ 
+- cat file1.txt >> file2.txt,  adds file1 to file2
+
+- cat >file1.txt , this creates the file1.txt and also lets us write inside it. If file1.txt already exists, it overrides the content
+
+     more about cat below...
+
+- echo The>text1.txt , create text1.txt , - cat text1.txt , it prints the first line which in our case is "The"
+
+		Example for echo and cat : 
+
+		-nixh@ubuntu22:~/Documents$ echo The>text1.txt
+		-nixh@ubuntu22:~/Documents$ echo big>text2.txt
+		-nixh@ubuntu22:~/Documents$ echo apple>text3.txt
+
+		-nixh@ubuntu22:~/Documents$ cat text1.txt
+		The
+		-nixh@ubuntu22:~/Documents$ cat text2.txt
+		big
+		-nixh@ubuntu22:~/Documents$ cat text3.txt
+		apple
+
+		-nixh@ubuntu22:~/Documents$ cat text1.txt text2.txt text3.txt
+		The
+		big
+		apple
+		
+		-nixh@ubuntu22:~/Documents$ cat text1.txt text2.txt text3.txt >all.txt
+		-nixh@ubuntu22:~/Documents$ cat all.txt
+		The
+		big
+		apple
+
+
+-nixh@ubuntu22:~/Documents$ cat >file1.txt , this creates the file1.txt and also lets us write inside it 
+i am having a good day (ctrl d to save) 
+
+-nixh@ubuntu22:~/Documents$ cat file1.txt  , this prints the line we wrote
+
+-nixh@ubuntu22:~/Documents$ cat file1.txt > file2.txt , copy file1 and rename to file2
+
+CAT VS MORE command - > The cat command is all well and good for small files. 
+But, if the file is large, the contents will zoom past and we'll only see the last screen worth of content. 
+One way to overcome this is by using the more command. The more command displays the contents of the file one screen at a time for large files
+
+
+- grep , is a command that search for strings inside words in a file : 
+	If we have a text file with many words : -nixh@ubuntu22:~/Documents$ grep am Automobiles.txt
+						 - it prints the words containing am
+
+- sort file3.txt, this command sorts the content in file3 in alphabetic order
+
+- nano text1.txt , open the directory where you have the text you want to edit, than press the nano command with the file name
+
+- | , this command is used to perform two operations in the same command. exmaple :    grep am Automobiles.txt | sort 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+LINUX FILE STRUCTURE
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+-uptime -> tells the time pc launched
+-free -> display amount of free and used memory in the system
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+USER PERMISSIONS
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+$ ls -l , this list command lists directories or files but giving more details like permissions and more, for example it prints: 
+
+drwxr-xr-x 2 nixh nixh 4096 Jan 18 11:57   - > This is for Desktop line when we hit  "ls -l"
+
+ 	  "2" stands for Symbolic Links
+	  "nixh" stands for Owner Name
+	  "nixh" stands for Group Name
+	  "4096" is the file size 
+	  "Jan 18 11:57" Time Stamp
+
+
+drwxrwxr-x,     d - stands for File/Dir type,       rwx - User Permissions,       rwx - Group Permissions,       r-x    - Other's Permissions 
+														 "-" , stands for blank in place of "w"
+
+
+FILE TYPES                                          FILE PERMISSIONS                      DENOTIONS(Emertime)
+	
+1.Normal File (-)				    1.Read (r)                            1.Users -> "u"
+2.Directory (d)					    2.Write (w)				  2.Groups -> "g"
+3.Character Special File (c)		            3.Execute (x)  			  3.Others -> "o"
+4.Binary Special File (b)								  4.All -> "a"
+
+
+- chmod , To change the access permissions of files and directories
+- chown , To change the owner of files and directories
+- chgrp , To change the group ownership of file and directories
+
+Example: 
+To remove a permission from u,g,o,a           -> chmod g-r ,  -> This means we are removing the read permissions from the group
+
+To set the permissions manually as we want    -> chmod g=rw-,o=r-- Pictures ,   -> We are setting the permission in Pictures Dir for the group "rw-"(read-write-blank for execute),      permission for others "read-blank-blank" (r--) it means only the read permission 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+LINUX REPOSITORIES
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+For Debian based systems like Ubuntu we use this command to install softwares ->         $sudo apt-get install package-name
+											 $sudo yum install package-name //for RHEL (red hat) based systems
+											 $sudo dnf install package-name //for Fedora based systems
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+WORKING WITH TAR FILES
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+To compress a file ->          $tar -cvf file1.tar file1.txt ,    file1.tar is name of the compressed file,     file1.txt is the file we want to compress
+To untar,uncompress a file ->  $ tar -xvf file1.tar,  file1.tar is the file or folder name we want to untar
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+REGULAR EXPRESSIONS
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ Linux Regular Expressions are special characters which help search data and matching complex patterns. 
+
+ Search in Google if Needed!
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+PROCESSES
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ Processes are programs opened or that are running in foreground or background.
+ Same program can have multiple instances. -> $top , this command shows instances running
+
+ $ps ux -> display processes that we have started
+	
+ $firefox -> run firefox
+ $bg firefox -> run firefox in background
+ 
+ $pidof firefox -> check the id of this instance
+ $kill 6060 -> end this process
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATING USERS
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$sudo useradd user-name // Adding a new user
+$sudo passwd user-name // Setting a password for that user
+$sudo userdel user-name // Deleting that user 
+
+$sudo groupadd group-name // Adding a new group
+$sudo groupdel group-name // Deleting that group
+$sudo usermod -g  group-name user-name // Adding a user to a primary group
+

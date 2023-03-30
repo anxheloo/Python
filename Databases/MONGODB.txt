@@ -1,0 +1,227 @@
+---------------------------------------------------------------------------				
+MONGO DB 
+---------------------------------------------------------------------------
+
+
+1-To Download MongoDB - https://www.mongodb.com/try/download - products - Community Edition - Community Server
+	
+2-To Download Shell - https://www.mongodb.com/try/download/shell
+
+3-Open MongoSh at the MongoShell directory installed in program files:
+	show dbs - show all databases
+	show collections - show all collections inside db 
+	use "name of db" - switch to another db(if it does not exist, it will create it )
+	cls - clear the console 
+	db.test.insertOne({test: 123}) - insert a document into a collection(this will create a collection called test and will pass a document inside )
+	db.test.find() - get the document : [ { _id: ObjectId("63a32beec37f08b176a46c02"), test: 123 } ]
+	db.dropDatabase() - drop the currently selected database 
+
+
+--------------------------------------------------------------------------
+WORKING WITH COLLECTIONS 
+--------------------------------------------------------------------------
+
+We create a new database by using command: use "db name", for example: use sampledb
+
+sampledb> show collections  -> ( will be empty cuz we still dont have any)
+
+sampledb> db.customer.insertOne({name: "John", age: 35, gender: "male"})  -> this will create the collection and insert the values in it 
+{
+  acknowledged: true,
+  insertedId: ObjectId("63a330e4c37f08b176a46c04")
+}
+sampledb> show collections
+customer
+sampledb>
+
+Another way is : db.createCollection("products")
+
+sampledb> db.createCollection("test", {capped: true, autoIndexId: true, size: 6142567,max:100}) - this will create a fixed collection that it will automatically override its oldest entries when it reaches its maximum size.
+												 
+
+-db.test.drop() - we delete the test collections 
+-db.test.find() - get the documents inside this collection
+
+
+By default MongoDb generates a unique Id but we can also insert it manually: 
+-sampledb> db.customer.insertOne({_id: "unique-id-1",name: "Steve",age: 30})
+
+If we want to insert multiple datas we use: 
+-db.customer.insertMany([{name:"Sara",gender: "female"},{name:"Steave",age:27},{name:"Rajesh",gender:"male",age:22}]) - MongoDb is schemaless, means we can insert different kind of datas that different from each other. One can have age,name,gender ; other can only have age and gender.
+
+We can also use db.customer.insert(), same way as above
+
+
+-----------------------------------------------------------------------------
+FETCH DOCUMENTS FROM A COLLECTION
+-----------------------------------------------------------------------------
+
+-Find all Documents from a Collection -> db.customer.find()
+-Find the first inserted Document in the Collection - > db.customer.findOne()
+-Fetch that document where name = Steve -> db.customer.findOne({name:"Steve"})
+-Find all Documents where name is John -> db.customer.find({name:"John"})
+-Specify the fields we want in the result after filtering to fetch documents-> db.customer.find({gender:"male"},{_id:false,gender:0})  , find where gender = male, in the result remove the id and gender
+-To print results in a formated way, this can only be used in find() method -> db.customer.find({gender:"male"},{_id:false,gender:0}).pretty()
+
+
+-----------------------------------------------------------------------------
+UPDATE A DOCUMENT IN THE COLLECTION
+-----------------------------------------------------------------------------
+
+-Updates a single document which matches the given filter, it only updates the first matching document -> db.customer.updateOne({name:"Steave"},{$set: {age: 30,gender: "female"}}) , update the document where name is "Steave", set age and gender...
+If we try to update a value which does not exist in the document, MongoDb will add that field and set the value as we specified : db.customer.updateOne({name:"Steave"},{$set: {age: 30,gender: "female"}}), if age is not a field in this document, it will be added with the value 30.
+
+-Update all the documents which matches the filter -> db.customer.updateMany({name:"John"},{$set: {gender: "unknown"}})
+
+-For all Documents with the name "John", a new field named country will be added -> db.customer.updateMany({name:"John"},{$set: {country: "UK"}})
+
+-We use this method to update multiple documents -> db.customer.update({name:"John"},{$set: {gender:"unknown"}},{multi:true}) , we use thie multi:true to update multiple, if we dont specify that, it will update the first matching element
+
+-To replace a Document with another one -> db.customer.replaceOne({name:"Mary"},{Name:"Merry J",country:"UK",city:"London"}) , replace the document where name=Mary with [Name:"Merry J",country:"UK",city:"London"]
+
+--------------------------------------------------------------------------------
+DELETING DOCUMENTS FROM COLLECTIONS
+--------------------------------------------------------------------------------
+
+-Delete the first Document where the name = john -> db.customer.deleteOne({name:"john"})
+-To delete the first Document in the collection-> db.customer.deleteOne({})
+-Delete multiple Documents where the name = "John" -> db.customer.deleteMany({name:"John"})
+-Delete all Documents -> db.customer.deleteMany({})
+
+Another way to delete: -> this is depricated
+-db.customer.remove({name:"john"},true) -> this will delete the first document with the name john
+-db.customer.remove({name:"john"}) -> this will delete every document with the name john 
+-db.customer.remove({}) -> remove all 
+
+We can also delete a field from the focument:
+-db.customer.updateMany({},{$unset: {}from:""})
+
+----------------------------------------------------------------------------------
+CURSOR METHODS
+----------------------------------------------------------------------------------
+
+-find() method does not return all the documents, so in order to get the other ones we use the command it 
+-To return all the documents -> db.customer.find().toArray()
+
+-Print all customer names-> db.customer.find().forEach(function(cust){print("customer name: "+cust.name)})
+
+
+-------------------------------------------------------------------------------------
+MONGO DB DataTypes
+-------------------------------------------------------------------------------------
+
+string - name: "John"
+boolean - isAdmin: true
+number - NumberInt(Int32) age: 34, NumberLong(Int64) value: 1000000000000, NumberDecimal(price: 12.99)
+ObjectID - _id: ObjectId("abdfdgdj")
+Date - ISODate("2022-08-22") , Timestamp(123432532)
+Embedded Documents - Products: {...}
+Arrays - We use arrays to store a list
+
+
+-Find the type of data being used -> typeof db.demo.findOne().age
+
+----------------------------------------------------------------------------------------
+NESTED FIELDS 
+-----------------------------------------------------------------------------------------
+
+-To fetch data from documents with embedded fields ->
+
+		{_id: ObjectId("13241fgsdg14231234vc")
+		 name: 'John',
+		 age: 28,
+		 isMarried: false,
+		 subscription: {
+		 type: 'monthly',
+		 renewalDate: {day: 31, month: 'March', year: 2023}}}
+
+ -Find documents with subsription type = monthly ->  db.customer.find({"subscription.type":"monthly"})
+ -Update a nested document field -> db.customer.updateOne({name:"Rashid"},{$set: {"subscription.type": "yearly"}})
+
+-Access the value of the nested Document field named year-> db.customer.updateOne({name:"Rashid"},{$set: {"subscription.renewalDate.year": 2024}})
+
+-This will return the nested document-> db.customer.findOne({name:"Rashid"}).subscription , this will return subscription with its fields
+ 
+------------------------------------------------------------------------------------------
+Relation in MongoDb
+------------------------------------------------------------------------------------------
+
+We use 2 ways to create relations : -Using Nested Fields 
+				    -Using References (create a seperate collection just to hold the field and values, and than we reference to it by using its id)
+					
+1-We create the address collection:
+	db.address.insertMany([{street:"park avenue",houseNo: 78, PIN: 567678, city:"London",country:UK},{street:"salt lake",houseNo: 38,PIN:457654,city:"Berlin",country:"Germany"}])
+
+2-Set the addres field in customer to be the id from address document
+	db.customer.updateOne({name:"Mark"},{$set: {address: ObjectId("324652346jlfjhfjkfjj26")}}) , we copied the address id from the address collection after using find() method.
+
+3-To merge to collections:
+	db.customer.aggregate({$lookup: {from: "address",localField: "address",foreignField: "_id",as:"addr"}})
+   
+1(from) - name of the collection we want to merge with customer collection,
+2(localField) - the field name which is actualy storing the reference, address field in customer is storing the reference
+3(foreignField) - the _id field in the address document which is storing the ObjectId reference in customer
+3(as) - field name which will be used to display the result
+
+
+USING ONE-TO-MANY RELATIONSHIP WITH EMBEDDED DOCUMENTS
+
+-	db.customer.updateOne({name:"Mark"}, {$set: {paymentMethod: [{cardNo: 12345678895, expiry: '06/2024'},{cardNo: 25423523451123, expiry: '05/2024'}]}})
+
+
+-----------------------------------------------------------------------------------------------
+Schema Validation
+-----------------------------------------------------------------------------------------------
+
+Before inserting documents in the collection we are validating the data whether the data are propper or not.
+
+db.createCollection("customers",{
+ validator: {
+  $jsonSchema: {
+   bsonType: "object",
+   required: ['name','email','address'],
+   properties: {
+    name: {
+     bsonType: 'string',
+     description: 'Name is a required field'
+    },
+    email: {
+     bsonType: 'string',
+     description: 'Email is a required field'
+    },
+    address: {
+     bsonType: 'object',
+     description: ''Address is a required field',
+     properties: {
+      street: {
+       bsonType: 'string'
+      },
+      city: {
+       bsonType: 'string'
+      },
+      country: {
+       bsonType: 'string'
+      }
+                 }
+             }
+                }
+                }
+             },
+	validationLevel: "moderate",
+	validationAction: "warn"
+})
+
+
+db.runCommand({collMod:"customer",validator:{},validationLevel:"strict",validationAction: "warn"})
+
+
+-If we dont want to put unvalidated datas into collection we use validationAction:error -> most used 
+-If we want to insert them and log a warning message we use: validationAction: "warn"
+
+-If we want to apply restrictions on documents on all inserts and updates: validationLevel: "strict" -> most used 
+-If we only want to apply restrictions on new inserts : validationLevel: "moderate"  
+
+By default when we try to insert an array of documents when 1 of them contains a dublicated key(id), it will insert documents before the error, but the dublicated document and after that will not be inserted. 
+If we want to only stop inserting the dublicated document but every document before and after the error we want to be inserted, we use for example: -> db.countries.insertMany([{_id:"GR",name:"Germany"},{_id:"USA",name:"United States of America"},{_id:"FR",name:"France"}],{ordered:false})
+
+
